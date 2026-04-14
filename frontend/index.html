@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nag Me!</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="logo">Nag Me! Help me stop biting my nails</div>
+    </header>
+    <div class="monitor-container">
+      <div style="margin-bottom: 20px">
+        <label class="switch">
+          <input
+            type="checkbox"
+            id="liveViewToggle"
+          />
+          <span class="slider"></span>
+        </label>
+        <span
+          style="font-size: 14px; margin-left: 10px; color: var(--gray-muted)"
+        >
+          Live Monitor Feed
+        </span>
+      </div>
+
+      <div
+        id="cameraContainer"
+        style="display: none; position: relative; margin-bottom: 20px"
+      >
+        <video
+          id="webcam"
+          autoplay
+          playsinline
+          style="
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            transform: scaleX(-1);
+          "
+        ></video>
+        <canvas
+          id="output_canvas"
+          style="
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            transform: scaleX(-1);
+          "
+        ></canvas>
+      </div>
+
+      <div class="pulse-circle" id="mainCircle">
+        <h2
+          id="statusText"
+          style="
+            margin: 0;
+            font-size: 18px;
+            padding: 10px;
+            pointer-events: none;
+          "
+        >
+          System Standby
+        </h2>
+      </div>
+
+      <button class="btn-main" id="startBtn">
+        START MONITORING
+      </button>
+    </div>
+    <div class="voices-container">
+      <div class="section-header">
+        <h3>Active Voices</h3>
+        <span
+          id="profileCount"
+          style="color: var(--primary-blue); font-size: 14px"
+          >0 Profiles</span
+        >
+      </div>
+
+      <div class="actions">
+        <button
+          class="btn-action"
+          id="recordBtn"
+          style="background: #d1e3ff; color: var(--primary-blue)"
+        >
+          <i class="fas fa-microphone"></i> Record New
+        </button>
+        <button
+          class="btn-action"
+          id="uploadBtn"
+          style="background: #e9ecef; color: var(--text-dark)"
+        >
+          <i class="fas fa-upload"></i> Upload
+        </button>
+      </div>
+    </div>
+
+    <div id="recordModal" class="modal">
+      <div class="modal-content">
+        <h3>Record New Nag</h3>
+        <div
+          id="recordingWave"
+          style="height: 50px; margin: 20px 0; color: red; display: none"
+        >
+          Recording...
+        </div>
+        <audio
+          id="recordPreview"
+          controls
+          style="display: none; width: 100%; margin: 20px 0"
+        ></audio>
+        <input
+          type="text"
+          id="voiceNameInput"
+          placeholder="Nag Name (e.g. Unnamed Nag 1)"
+          style="
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+          "
+        />
+        <div style="display: flex; gap: 10px">
+          <button id="micBtn" class="btn-main" style="flex: 1">
+            Start Recording
+          </button>
+          <button
+            id="saveVoiceBtn"
+            class="btn-main"
+            style="flex: 1; background: green; display: none"
+          >
+            Save
+          </button>
+          <button id="cancelModalBtn" class="btn-action" style="flex: 1">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
