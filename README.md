@@ -6,7 +6,7 @@ identifies target gestures through a webcam feed and provides immediate audio fe
 
 ## The Motivation: Why I Built This
 
-This project was born out of a real-world problem in my personal life. When my partner and I were in the same city, I
+When my partner and I were in the same city, I
 could give him a physical nudge or a quick word whenever I saw him subconsciously biting his nails.However, since we
 transitioned to a long-distance relationship, that physical support system disappeared.
 
